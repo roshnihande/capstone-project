@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Use GitHub credentials to clone repository
+                withCredentials([usernamePassword(credentialsId: 'fd38f1e9-c4e5-4dfb-936f-7bf3c296c5dc', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+                    git credentialsId: 'github-credentials', url: 'https://github.com/roshnihande/capstone-project.git'
+                }
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                // Build Docker image from Django application code
+                sh 'docker build -t my-django-app .'
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                // Run automated tests to validate the application's functionality
+                // Modify this step according to your Django application's testing framework
+                sh 'python manage.py test'
+            }
+        }
+        
+        stage('Deploy to Minikube') {
+            steps {
+                // Deploy the Django application to the Minikube Kubernetes cluster
+                // Modify this step according to your deployment process (e.g., kubectl apply)
+                sh 'kubectl apply -f deployment.yaml'
+            }
+        }
+    }
+}
