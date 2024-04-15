@@ -3,22 +3,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // This step is **outside** the withCredentials block (no credentials used)
-                sh 'echo Starting checkout...'
-
-                withCredentials([usernamePassword(credentialsId: 'd39691d9-f12c-4abd-89ec-8639e722b3f7', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    // These steps are **within** the withCredentials block (credentials will be used)
-                    echo Username: $GIT_USERNAME  // This will print the retrieved username
-                    git url: 'https://github.com/roshnihande/capstone-project.git'
+                // Use GitHub credentials to clone repository
+                withCredentials([usernamePassword(credentialsId: 'd39691d9-f12c-4abd-89ec-8639e722b3f7', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+                    git credentialsId: 'github-credentials', url: 'https://github.com/roshnihande/capstone-project.git'
+                }
             }
         }
-
         
         stage('Build Docker Image') {
             steps {
               script {
-                  // Build Docker image
-                def dockerImage = docker.build('my-django-app:latest', './django_project')
+                // Build Docker image from Django application code
+                sh 'docker build -t my-django-app .'
             }
             }
         }
@@ -39,5 +35,4 @@ pipeline {
             }
         }
     }
-}
 }
