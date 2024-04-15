@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {     
+        DOCKERHUB_CREDENTIALS= credentials('dockerhubcredentials')     
+    } 
     stages {
         stage('Checkout') {
             steps {
@@ -36,20 +39,32 @@ pipeline {
             }
             }
         }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    def dockerRegistryURL = 'https://hub.docker.com/repository/docker/roshnihande/capstone-project' 
-                    def dockerHubCredentialsId = '4059b5ea-2e43-4c78-a261-d4f5485c6ebf'  
+        stage('Login to Docker Hub') {      	
+            steps{                       	
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
+                echo 'Login Completed'      
+            }           
+        } 
+        stage('Push Image to Docker Hub') {         
+            steps{                            
+                sh 'sudo docker push <dockerhubusername>/<dockerhubreponame>:$BUILD_NUMBER'           
+                echo 'Push Image Completed'       
+            }            
+        } 
+        // stage('Push Docker Image') {
+        //     steps {
+        //         script {
+        //             def dockerRegistryURL = 'https://hub.docker.com/repository/docker/roshnihande/capstone-project' 
+        //             def dockerHubCredentialsId = '4059b5ea-2e43-4c78-a261-d4f5485c6ebf'  
 
-                    // Push the image using credentials stored in Jenkins
-                    docker.withRegistry(dockerRegistryURL, dockerHubCredentialsId) {
-                        def myImage = docker.build('my-django-app:latest')  // Build and assign to variable
-                        myImage.push()  // Push the built image
-                    }
-                }
-            }
-        }    
+        //             // Push the image using credentials stored in Jenkins
+        //             docker.withRegistry(dockerRegistryURL, dockerHubCredentialsId) {
+        //                 def myImage = docker.build('my-django-app:latest')  // Build and assign to variable
+        //                 myImage.push()  // Push the built image
+        //             }
+        //         }
+        //     }
+        // }    
         
         stage('Run Tests') {
             steps {
