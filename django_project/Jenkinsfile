@@ -18,6 +18,14 @@ pipeline {
             }
 
         }
+        stage('Adjust Permissions') {
+            steps {
+                script {
+                    // Change permissions for django_project directory (replace with actual path if different)
+                    sh 'chmod u+rX /var/jenkins_home/workspace/jenkins/django_project'
+                }
+            }
+        }
         
         
         stage('Build Docker Image') {
