@@ -11,6 +11,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Install Gunicorn
 RUN pip install gunicorn
 
+#Print PWD
+RUN pwd
+
 # Copy application code
 COPY project/django_app/ ./django_app
 COPY project/project/ ./project
