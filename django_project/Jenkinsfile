@@ -47,7 +47,7 @@ pipeline {
                 script {
                     // Push the image using credentials stored in Jenkins
                     docker.withRegistry('', registryCredential) {
-                        def myImage = docker.build("my-django-app:latest", "-f django_project .")  // Build and assign to variable
+                        def myImage = docker.build("my-django-app:latest", "-f django_project/Dockerfile"", "..")  // Build and assign to variable
                         myImage.push()  // Push the built image
                     }
                 }
