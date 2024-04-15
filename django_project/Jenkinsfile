@@ -32,7 +32,7 @@ pipeline {
             steps {
               script {
                 // Build Docker image from Django application code
-                sh 'docker build -t my-django-app ./django_project/Dockerfile'
+                sh 'docker build -t my-django-app django_project'
             }
             }
         }
