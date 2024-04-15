@@ -63,7 +63,7 @@ pipeline {
                         sh "docker tag ${imageName} roshnihande/my-django-app:latest"  // Replace with your username
 
                         // Push the tagged image to Docker Hub
-                        def myImage = docker.getImage(roshnihande/my-django-app:latest)  // Reference the tagged image
+                        def myImage = docker.getImage(roshnihande/my-django-app:latest)  
                         myImage.push()  // Push the tagged image
                     }
                 }
