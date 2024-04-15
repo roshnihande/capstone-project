@@ -9,18 +9,13 @@ pipeline {
                 }
             }
         }
-        stage('Verify Docker') {
-            steps {
-            sh 'docker ps'
-            }
-        }
 
         
         stage('Build Docker Image') {
             steps {
               script {
-                // Build Docker image from Django application code
-                sh 'docker build -t my-django-app .'
+                  // Build Docker image
+                def dockerImage = docker.build('my-django-app:latest', 'django_project/Dockerfile')
             }
             }
         }
