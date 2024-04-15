@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Verify Docker') {
             steps {
-            sh 'docker ps'  # This command lists running Docker containers
+            sh 'docker ps'
             }
         }
 
