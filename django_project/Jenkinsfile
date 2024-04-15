@@ -39,8 +39,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    def dockerRegistryURL = 'https://hub.docker.com'  # Replace with your registry URL
-                    def dockerHubCredentialsId = '4059b5ea-2e43-4c78-a261-d4f5485c6ebf'  # Replace with your credential ID
+                    def dockerRegistryURL = 'https://hub.docker.com' 
+                    def dockerHubCredentialsId = '4059b5ea-2e43-4c78-a261-d4f5485c6ebf'  
 
                     // Push the image using credentials stored in Jenkins
                     docker.withRegistry(dockerRegistryURL, dockerHubCredentialsId) {
