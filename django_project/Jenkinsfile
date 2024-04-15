@@ -3,11 +3,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // This step is **outside** the withCredentials block (no credentials used)
+                sh 'echo Starting checkout...'
+
                 withCredentials([usernamePassword(credentialsId: 'd39691d9-f12c-4abd-89ec-8639e722b3f7', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    sh 'echo Username: $GIT_USERNAME && echo Password: $GIT_PASSWORD'  // Test for retrieved credentials (masking actual password)
-                    // Use the defined credentials for Git operations
+                    // These steps are **within** the withCredentials block (credentials will be used)
+                    echo Username: $GIT_USERNAME  // This will print the retrieved username
                     git url: 'https://github.com/roshnihande/capstone-project.git'
-                }
             }
         }
 
