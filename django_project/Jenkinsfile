@@ -14,7 +14,7 @@ pipeline {
             steps {
               script {
                 // Build Docker image from Django application code
-                sh 'docker build -t my-django-app .'
+                sh 'docker build -t my-django-app ./django_project/Dockerfile'
             }
             }
         }
