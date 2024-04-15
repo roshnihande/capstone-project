@@ -36,6 +36,17 @@ pipeline {
             }
             }
         }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    def username = 'roshnihande'  # Optional, if not using credentials
+                    def password = credentialsId('dockerhub-credentials')
+                    withCredentials([usernamePassword(credentialsId: password, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
+                        // ... other commands using $USERNAME and $PASSWORD
+                    }
+                }
+            }
         
         stage('Run Tests') {
             steps {
