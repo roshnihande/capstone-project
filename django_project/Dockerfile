@@ -5,7 +5,7 @@ FROM python:3.10
 WORKDIR /usr/src/app
 
 # Copy requirements.txt and install dependencies
-COPY ../project/requirements.txt ./
+COPY project/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Gunicorn
@@ -15,8 +15,8 @@ RUN pip install gunicorn
 RUN pwd
 
 # Copy application code
-COPY ../project/django_app/ ./django_app
-COPY ../project/project/ ./project
+COPY project/django_app/ ./django_app
+COPY project/project/ ./project
 
 
 # Expose port
