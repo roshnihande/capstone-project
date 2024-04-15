@@ -5,7 +5,7 @@ pipeline {
             steps {
                 // Use GitHub credentials to clone repository
                 withCredentials([usernamePassword(credentialsId: 'd39691d9-f12c-4abd-89ec-8639e722b3f7', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
-                    git credentialsId: 'github-credentials', url: 'https://github.com/roshnihande/capstone-project.git'
+                    git credentialsId: 'd39691d9-f12c-4abd-89ec-8639e722b3f7', url: 'https://github.com/roshnihande/capstone-project.git'
                 }
             }
         }
