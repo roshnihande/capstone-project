@@ -47,7 +47,7 @@ pipeline {
                 script {
                     // Push the image using credentials stored in Jenkins
                     docker.withRegistry('', registryCredential) {
-                        def myImage = docker.build("roshnihande/my-django-app:latest", "-f django_project/Dockerfile django_project") 
+                        def myImage = docker.build("roshnihande/capstone-project:latest", "-f django_project/Dockerfile django_project") 
                         myImage.push() // Build and assign to variable
                     }
                 }
@@ -56,11 +56,10 @@ pipeline {
         
         
         stage('Deploy to Minikube') {
-            steps {
-                // Deploy the Django application to the Minikube Kubernetes cluster
-                // Modify this step according to your deployment process (e.g., kubectl apply)
-                sh 'kubectl apply -f deployment.yaml'
-            }
+            script {
+                kubernetesDeploy(configs: "deployment.yml", 
+                                                "service.yml")
+                }
         }
     }
 }
