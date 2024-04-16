@@ -52,32 +52,8 @@ pipeline {
                     }
                 }
             }
-        }   
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script {
-        //             // Build the image (assuming it's already built)
-        //             docker.withRegistry('roshnihande', registryCredential) {  // Replace with your username
-        //                 def imageName = 'my-django-app:latest'  // Assuming the image is already built with this name
-
-        //                 // Tag the image with your Docker Hub repository and desired tag
-        //                 sh "docker tag ${imageName} roshnihande/my-django-app:latest"  // Replace with your username
-
-        //                 // Push the tagged image to Docker Hub
-        //                 def myImage = docker.image(name: (roshnihande/my-django-app:latest)) 
-        //                 myImage.push()  // Push the tagged image
-        //             }
-        //         }
-        //     }
-        // }     
+        }        
         
-        stage('Run Tests') {
-            steps {
-                // Run automated tests to validate the application's functionality
-                // Modify this step according to your Django application's testing framework
-                sh 'python manage.py test'
-            }
-        }
         
         stage('Deploy to Minikube') {
             steps {
