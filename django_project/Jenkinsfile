@@ -56,11 +56,13 @@ pipeline {
         
         
         stage('Deploy to Minikube') {
-            script {
-                kubernetesDeploy(configs: "deployment.yml", 
-                                                "service.yml")
-                }
+          steps {
+                script {
+                    kubernetesDeploy(configs: "deployment.yml", 
+                                                    "service.yml")
+                    }
         }
     }
+}
 }
 
