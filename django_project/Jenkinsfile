@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Use GitHub credentials to clone repository
-                withCredentials([usernamePassword(credentialsId: 'github-credentails', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
                     git credentialsId: 'github-credentials', url: 'https://github.com/roshnihande/capstone-project.git'
                 }
             }
