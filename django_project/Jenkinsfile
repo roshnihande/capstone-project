@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    tools {dockerTool  "docker" } 
     environment {     
         registry = "roshnihande/capstone-project" 
         registryCredential = 'dockerhub-credentials' 
