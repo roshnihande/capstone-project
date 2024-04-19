@@ -2,14 +2,14 @@ pipeline {
     agent any
     environment {     
         registry = "roshnihande/capstone-project" 
-        registryCredential = 'dockerhubcredentials' 
+        registryCredential = 'dockerhub-credentials' 
         dockerImage = ''      
     } 
     stages {
         stage('Checkout') {
             steps {
                 // Use GitHub credentials to clone repository
-                withCredentials([usernamePassword(credentialsId: 'd39691d9-f12c-4abd-89ec-8639e722b3f7', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'github-credentails', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_PASSWORD')]) {
                     git credentialsId: 'github-credentials', url: 'https://github.com/roshnihande/capstone-project.git'
                 }
             }
@@ -58,8 +58,7 @@ pipeline {
         stage('Deploy to Minikube') {
           steps {
                 script {
-                    kubernetesDeploy(configs: "deployment.yml", 
-                                                    "service.yml")
+                    kubernetesDeploy(configs: "deployment.yml", "service.yml")
                     }
         }
     }
