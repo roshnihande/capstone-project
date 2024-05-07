@@ -4,7 +4,8 @@ pipeline {
     environment {     
         registry = "roshnihande/capstone-project" 
         registryCredential = 'dockerhub-credentials' 
-        dockerImage = ''      
+        dockerImage = ''    
+        kubeconfigCred = 'kubectlconfig' 
     } 
     stages {
         stage('Checkout') {
