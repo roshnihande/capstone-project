@@ -57,12 +57,16 @@ pipeline {
         
         
         stage('Deploy to Minikube') {
-          steps {
-                script {
-                    kubernetesDeploy(configs: "deployment.yml", "service.yml")
+            steps {
+                // Use Kubernetes credentials to access the kubeconfig file
+                withCredentials([file(credentialsId: kubectlconfig, variable: 'KUBECONFIG_FILE')]) {
+                    script {
+                        env.KUBECONFIG = "${env.WORKSPACE}/${KUBECONFIG_FILE}"
+                        kubernetesDeploy(configs: "deployment.yml", "service.yml")
                     }
-        }
-    }
+                }
+            }
+}
 }
 }
 
