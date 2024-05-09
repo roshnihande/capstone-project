@@ -62,7 +62,8 @@ pipeline {
                 // Use Kubernetes credentials to access the kubeconfig file
                 withCredentials([file(credentialsId: kubectlconfig, variable: 'KUBECONFIG_FILE')]) {
                     script {
-                        env.KUBECONFIG = "${env.WORKSPACE}/${KUBECONFIG_FILE}"
+                        def kubeconfigPath = "${env.WORKSPACE}/${env.KUBECONFIG_VAR}"
+                        env.KUBECONFIG = kubeconfigPath
                         kubernetesDeploy(configs: "deployment.yml", "service.yml")
                     }
                 }
