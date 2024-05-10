@@ -61,7 +61,7 @@ pipeline {
             steps {
                 // Use Kubernetes credentials to access the kubeconfig file
                 script {
-                  kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
+                  kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes")
                 }
 
             }
