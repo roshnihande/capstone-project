@@ -63,7 +63,7 @@ pipeline {
             withCredentials([
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
             ]) {
-              sh 'kubectl --token $api_token --server https://192.168.49.2:8443 apply -f Django-python-application/django_project/deployment.yaml'
+              sh 'kubectl --token $api_token --server https://192.168.49.2:8443 apply -f Django-python-application/django_project/deployment.yml'
             }
           }
         }
