@@ -55,7 +55,14 @@ pipeline {
                 }
             }
         }        
-        
+       stage('test') {
+            steps {
+                script {
+                    // List contents of workspace directory
+                    sh 'ls -l /var/jenkins_home/workspace/Django-python-application/django_project'
+                }
+            }
+    }
         
         stage('Deploy App on k8s') {
           steps {
