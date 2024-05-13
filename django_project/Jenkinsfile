@@ -57,15 +57,15 @@ pipeline {
         }        
         
         
-        stage('Deploy to Minikube') {
-            steps {
-                // Use Kubernetes credentials to access the kubeconfig file
-                script {
-                  kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "kubernetes")
-                }
-
+        stage('Deploy App on k8s') {
+          steps {
+            withCredentials([
+                string(credentialsId: 'your_kubernetes_credential_id', variable: 'api_token')
+            ]) {
+              sh 'kubectl --token $api_token --server https://192.168.49.2:8443 apply -f your_deployment.yaml'
             }
-}
+          }
+        }
 }
 }
 
