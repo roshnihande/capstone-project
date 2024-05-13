@@ -62,7 +62,7 @@ pipeline {
             withCredentials([
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
             ]) {
-              sh 'kubectl --token $api_token --server https://192.168.49.2:8443 apply -f your_deployment.yaml'
+              sh 'kubectl --token $api_token --server https://192.168.49.2:8443 apply -f deployment.yaml'
             }
           }
         }
