@@ -63,6 +63,8 @@ pipeline {
                     script {
                         def api_token = credentials('my_kubernetes')
                         def minikube_ca_cert = env.my_kubernetes
+                        echo "Minikube CA certificate content:"
+                        echo minikube_ca_cert
                         
                         writeFile file: 'ca.crt', text: minikube_ca_cert
                         
