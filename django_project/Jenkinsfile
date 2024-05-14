@@ -59,14 +59,19 @@ pipeline {
 
         
         stage('Deploy App on k8s') {
-          steps {
-            withCredentials([
-                string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                [$class: 'SecretTextBinding', credentialsId: 'my_kubernetes', variable: 'MINIKUBE_CA_CERT']
-            ]) {
-              sh 'kubectl --token $api_token --server https://kubernetes.docker.internal:6443 --certificate-authority <(echo "$MINIKUBE_CA_CERT")  apply -f django_project/deployment.yml'
+            steps {
+                script {
+                    def api_token = credentials('my_kubernetes')
+                    def minikube_ca_cert = credentials('my_kubernetes')
+                    
+                    sh '''
+                        kubectl --token $api_token \
+                                --server https://kubernetes.docker.internal:6443 \
+                                --certificate-authority <(echo "$minikube_ca_cert") \
+                                apply -f django_project/deployment.yml
+                    '''
+                }
             }
-          }
         }
 }
 }
