@@ -63,7 +63,7 @@ pipeline {
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
                
             ]) {
-              sh 'kubectl --token $api_token --server https://127.0.0.1:64122 apply -f django_project/deployment.yml --validate=false' 
+              sh 'kubectl --token $api_token --server https://kubernetes.docker.internal:6443 apply -f django_project/deployment.yml --validate=false' 
             }
           }
         }
