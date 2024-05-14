@@ -64,12 +64,12 @@ pipeline {
                     def api_token = credentials('my_kubernetes')
                     def minikube_ca_cert = credentials('my_kubernetes')
                     
-                    sh '''
-                        kubectl --token $api_token \
-                                --server https://kubernetes.docker.internal:6443 \
-                                --certificate-authority <(echo "$minikube_ca_cert") \
-                                apply -f django_project/deployment.yml
-                    '''
+                    def kubectl_command = "kubectl --token $api_token " +
+                                          "--server https://kubernetes.docker.internal:6443 " +
+                                          "--certificate-authority <(echo \"$minikube_ca_cert\") " +
+                                          "apply -f django_project/deployment.yml"
+                    
+                    sh kubectl_command
                 }
             }
         }
