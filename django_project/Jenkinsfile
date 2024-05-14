@@ -62,19 +62,20 @@ pipeline {
                 steps {
                     script {
                         def api_token = credentials('my_kubernetes')
-                        def minikube_ca_cert = credentials('my_kubernetes')
-                        
-                        def kubectl_command = "kubectl --token $api_token " +
-                                              "--server https://kubernetes.docker.internal:6443 " +
-                                              "--certificate-authority=ca.crt " +
-                                              "apply -f django_project/deployment.yml"
+                        def minikube_ca_cert = env.my_kubernetes
                         
                         writeFile file: 'ca.crt', text: minikube_ca_cert
                         
-                        sh kubectl_command
+                        sh '''
+                            kubectl --token "$api_token" \
+                                    --server https://kubernetes.docker.internal:6443 \
+                                    --certificate-authority=ca.crt \
+                                    apply -f django_project/deployment.yml
+                        '''
                     }
                 }
             }
+
 
     }
 
