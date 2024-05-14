@@ -16,24 +16,24 @@ pipeline {
                 }
             }
         }
-        stage('test') {
-            steps {
-              script {
-                // List contents of workspace directory
-                sh 'ls -l'
-                sh 'ls -l /var/jenkins_home/workspace/Django-python-application/django_project'  
-            }
-            }
+        // stage('test') {
+        //     steps {
+        //       script {
+        //         // List contents of workspace directory
+        //         sh 'ls -l'
+        //         sh 'ls -l /var/jenkins_home/workspace/Django-python-application/django_project'  
+        //     }
+        //     }
 
-        }
-        stage('Adjust Permissions') {
-            steps {
-                script {
-                    // Change permissions for django_project directory (replace with actual path if different)
-                    sh 'chmod u+rX /var/jenkins_home/workspace/Django-python-application/django_project'
-                }
-            }
-        }
+        // }
+        // stage('Adjust Permissions') {
+        //     steps {
+        //         script {
+        //             // Change permissions for django_project directory (replace with actual path if different)
+        //             sh 'chmod u+rX /var/jenkins_home/workspace/Django-python-application/django_project'
+        //         }
+        //     }
+        // }
         
         
         // stage('Build Docker Image') {
@@ -45,17 +45,17 @@ pipeline {
         //     }
         // }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Push the image using credentials stored in Jenkins
-                    docker.withRegistry('', registryCredential) {
-                        def myImage = docker.build("roshnihande/capstone-project:latest", "-f django_project/Dockerfile django_project") 
-                        myImage.push() // Build and assign to variable
-                    }
-                }
-            }
-        }        
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             // Push the image using credentials stored in Jenkins
+        //             docker.withRegistry('', registryCredential) {
+        //                 def myImage = docker.build("roshnihande/capstone-project:latest", "-f django_project/Dockerfile django_project") 
+        //                 myImage.push() // Build and assign to variable
+        //             }
+        //         }
+        //     }
+        // }        
 
         stage('Deploy App on k8s') {
           steps {
@@ -63,7 +63,7 @@ pipeline {
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
                
             ]) {
-              sh 'kubectl --token $api_token --server https://kubernetes.docker.internal:6443 apply -f django_project/deployment.yml --validate=false' 
+              sh 'kubectl --token $api_token --server https://127.0.0.1:6443 apply -f django_project/deployment.yml --validate=false' 
             }
           }
         }
