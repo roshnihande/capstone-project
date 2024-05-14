@@ -62,9 +62,9 @@ pipeline {
           steps {
             withCredentials([
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                file(credentialsId: 'minikube-ca-cert', variable: 'MINIKUBE_CA_CERT')
+                string(credentialsId: 'minikube-ca-cert', variable: 'MINIKUBE_CA_CERT')
             ]) {
-              sh 'kubectl --token $api_token --server https://kubernetes.docker.internal:6443 --certificate-authority="$MINIKUBE_CA_CERT" apply -f django_project/deployment.yml'
+              sh 'kubectl --token $api_token --server https://kubernetes.docker.internal:6443 --certificate-authority <(echo "$MINIKUBE_CA_CERT" | base64 --decode) apply -f django_project/deployment.yml'
             }
           }
         }
