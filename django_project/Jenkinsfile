@@ -63,7 +63,7 @@ pipeline {
                 string(credentialsId: 'my_kubernetes', variable: 'api_token')
                
             ]) {
-              sh 'kubectl --token $api_token --server https://kubernetes.default.svc.cluster.local:8443 --insecure-skip-tls-verify=true apply -f django_project/deployment.yml -v=9'
+              sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/deployment.yml -v=9'
             }
           }
         }
