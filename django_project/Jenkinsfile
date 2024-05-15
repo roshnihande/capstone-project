@@ -16,16 +16,7 @@ pipeline {
                 }
             }
         }
-        stage('test') {
-            steps {
-              script {
-                // List contents of workspace directory
-                sh 'ls -l'
-                sh 'ls -l /var/jenkins_home/workspace/Django-python-application/django_project'  
-            }
-            }
 
-        }
         stage('Adjust Permissions') {
             steps {
                 script {
@@ -36,21 +27,13 @@ pipeline {
         }
         
         
-        // stage('Build Docker Image') {
-        //     steps {
-        //       script {
-        //         // Build Docker image from Django application code
-        //         sh 'docker build -t my-django-app django_project'
-        //     }
-        //     }
-        // }
 
         stage('Build Docker Image') {
             steps {
                 script {
                     // Push the image using credentials stored in Jenkins
                     docker.withRegistry('', registryCredential) {
-                        def myImage = docker.build("roshnihande/capstone-project:1", "-f django_project/Dockerfile django_project") 
+                        def myImage = docker.build("roshnihande/capstone-project:latest", "-f django_project/Dockerfile django_project") 
                         myImage.push() // Build and assign to variable
                     }
                 }
@@ -66,6 +49,7 @@ pipeline {
               sh '''
                  kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/deployment.yml
                  kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/service.yml
+                 kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/ingress.yml
                 '''
                 
             }
