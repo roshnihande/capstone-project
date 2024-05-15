@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: django-app
-        image: roshnihande/capstone-project:1  # Your Docker image name
+        image: roshnihande/capstone-project:latest  # Your Docker image name
         ports:
         - containerPort: 8000
 # apiVersion: apps/v1
