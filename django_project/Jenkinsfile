@@ -49,7 +49,6 @@ pipeline {
               sh '''
                  kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/deployment.yml
                  kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/service.yml
-                 kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f django_project/ingress.yml
                 '''
                 
             }
