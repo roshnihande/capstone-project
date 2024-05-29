@@ -25,6 +25,15 @@ pipeline {
                 }
             }
         }
+        stage('Debug Docker Access') {
+            steps {
+                script {
+                    sh 'id'
+                    sh 'groups'
+                    sh 'docker ps'
+                }
+            }
+        }
         
         
 
